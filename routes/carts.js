@@ -5,18 +5,16 @@ const router = express.Router();
 
 const cartsFilePath = path.join(__dirname, '../data/carritos.json');
 
-// Helper function to read carts from the JSON file
 const getCarts = () => {
   const data = fs.readFileSync(cartsFilePath, 'utf8');
   return JSON.parse(data);
 };
 
-// Helper function to write carts to the JSON file
 const saveCarts = (carts) => {
   fs.writeFileSync(cartsFilePath, JSON.stringify(carts, null, 2));
 };
 
-// Create a new cart
+
 router.post('/', (req, res) => {
   const carts = getCarts();
   const newCart = {
@@ -28,7 +26,7 @@ router.post('/', (req, res) => {
   res.json(newCart);
 });
 
-// Add a product to a cart
+
 router.post('/:cid/products/:pid', (req, res) => {
   const carts = getCarts();
   const cart = carts.find((c) => c.id === parseInt(req.params.cid));
@@ -41,7 +39,7 @@ router.post('/:cid/products/:pid', (req, res) => {
   res.json(cart);
 });
 
-// Get a cart by ID
+
 router.get('/:cid', (req, res) => {
   const carts = getCarts();
   const cart = carts.find((c) => c.id === parseInt(req.params.cid));
